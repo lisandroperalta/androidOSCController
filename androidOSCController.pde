@@ -14,14 +14,13 @@ import ketai.ui.*;
 
 
 color backgroundcolor = color(0, 0, 0);
-
+String myIp = "";
 void setup()
 {
   fullScreen();
   orientation(PORTRAIT);
   textSize(24*displayDensity);
-  textAlign(CENTER);
-  
+
   //register for key events(keyPressed currently Broken)
   //registerMethod("keyEvent", this);
 }
@@ -31,45 +30,66 @@ void draw()
   background(backgroundcolor);
 
   drawUI();
-  text("click screen to change background color", width/2, height/2);
 }
 
 
 void mousePressed()
 {
-  if (mouseY < 100)
+  if (mouseY < 200)
   {
-    if (mouseX < width/3)
+    if (mouseX < 200)
       KetaiKeyboard.toggle(this);
-  
+  }
+
+
+  if (mouseY >200 && mouseY < 500)
+  {
+    if (mouseX < 200);
+
+    guardarConf();
   }
 }
+
+
+void guardarConf(){
+
+ ///saveStrings("lines.txt", myIp);
+
+}
+
 
 
 
 void drawUI()
 {
   pushStyle();
-  textAlign(LEFT);
+  //  textAlign(LEFT);
   fill(0);
   stroke(255);
-  rect(0, 0, width/3, 100);
-  rect(width/3, 0, width/3, 100);
+  rect (10, 10, 500, 200);
+  rect (10, 225, 500, 200);
 
-  rect((width/3)*2, 0, width/3, 100);
 
   fill(255);
-  text("Keyboard", 5, 60); 
-  text("PopUp", width/3 + 5, 60); 
-  text("Vibrate", width/3*2 + 5, 60); 
+  text("IP: "+myIp, 25, 150); 
+  text("Guardar ", 25, 350); 
+
+
+
   popStyle();
 }
 
 //use event framework temporarily
 public void keyPressed() {
+  if (keyCode==BACKSPACE) {
+    /* KetaiAlertDialog.popup(this, "BakcSpace pressed", "You pressed the BakcSpace key!");*/
+    if (myIp.length()>=1) {
+      myIp=myIp.substring(0, myIp.length()-1);
+    }
+  }
+  if (keyCode!=BACKSPACE) {
 
-  if (key == ' ')
-    KetaiAlertDialog.popup(this, "SPACE pressed", "You pressed the <SPACE> key!");
-  else
-    println(key);
+    myIp = myIp + key;
+  }
+  println(key);
 }
